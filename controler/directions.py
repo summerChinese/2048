@@ -3,17 +3,156 @@
 # @Time    : 2017/11/12 18:40
 # @Author  : summer
 # @File    : directions.py
+import random
 
+RANDOM = 1
 # 行数和列数记得用
 
 MAXCOLS = 4
 MAXROWS = 4
 
 
-def move_up(matrix):
-    # 操作matrix后返回一个结果
-    # 操作
-    # ...
-    # 操作
-    result_matrix = matrix
-    return result_matrix
+def compare_up(matrix, one, line):
+    if matrix[one + 1][line] == 0:
+        pass  # 不做改变
+    elif matrix[one][line] == 0:
+        matrix[one][line] = matrix[one + 1][line]
+        matrix[one + 1][line] = 0
+    elif matrix[one][line] == matrix[one + 1][line]:
+        matrix[one][line] = matrix[one][line] * 2
+        matrix[one + 1][line] = 0
+    else:
+        pass  # 不做改变
+
+
+def compare_left(matrix, one, col):
+    if matrix[col][one + 1] == 0:
+        pass
+    elif matrix[col][one] == 0:
+        matrix[col][one] = matrix[col][one + 1]
+        matrix[col][one + 1] = 0
+    elif matrix[col][one + 1] == matrix[col][one]:
+        matrix[col][one] = 2 * matrix[col][one + 1]
+        matrix[col][one + 1] = 0
+    else:
+        pass
+
+
+def compare_down(matrix, one, line):
+    if matrix[one - 1][line] == 0:
+        pass
+    elif matrix[one][line] == 0:
+        matrix[one][line] = matrix[one - 1][line]
+        matrix[one - 1][line] = 0
+    elif matrix[one][line] == matrix[one - 1][line]:
+        matrix[one][line] = 2 * matrix[one - 1][line]
+        matrix[one - 1][line] = 0
+    else:
+        pass
+
+
+def compare_right(matrix, one, col):
+    if matrix[one][col - 1] == 0:
+        pass
+    elif matrix[one][col] == 0:
+        matrix[one][col] = matrix[one][col - 1]
+        matrix[one][col - 1] = 0
+    elif matrix[one][col - 1]==matrix[one][col]:
+        matrix[one][col] = 2 * matrix[one][col - 1]
+        matrix[one][col - 1] = 0
+    else:
+        pass
+
+
+def generate_random(matrix):
+    zero_matrix = []
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] == 0:
+                zero_matrix.append([i, j])
+    random_list = random.sample(zero_matrix, RANDOM)
+    index = random.choice([1, 2])
+    a = random_list[0][0]
+    b = random_list[0][1]
+    # 第row行第col列装入数2的index次方，即2的一次或二次
+    matrix[a][b] = 2 ** index
+
+
+#
+# def compare_down(matrix, one, line):
+#     if matrix[one + 1][col] == 0:
+#         pass
+#     elif matrix[one][col] == 0:
+#         matrix[one][col] = matrix[one + 1][col]
+#         matrix[one + 1][col] = 0
+#     elif matrix[one + 1][col] == matrix[one][col]:
+#         matrix[one + 1][col] = 0
+#         matrix[one][col] = 2 * matrix[one + 1][col]
+#     else:
+#         pass
+#
+#
+# def compare_left(matrix, one, col):
+#     if matrix[col][one+1] == 0:
+#         pass
+#     elif matrix[col][one] == 0:
+#         matrix[col][one]= matrix[col][one+1]
+#         matrix[col][one + 1] = 0
+#     elif matrix[col][one]== matrix[col][one+1]:
+#         matrix[col][one] = 2 * matrix[col][one+1]
+#         matrix[col][one+1]=0
+#     else:
+#         pass
+
+
+# 函数参数：上移前的矩阵matrix
+# 函数返回值:上移后的矩阵result_matrix
+# 函数功能：上移
+def MOVE_UP(matrix):
+    for j in range(4):
+        compare_up(matrix, 0, j)
+        compare_up(matrix, 1, j)
+        compare_up(matrix, 0, j)
+        compare_up(matrix, 2, j)
+        compare_up(matrix, 1, j)
+        compare_up(matrix, 0, j)
+
+    generate_random(matrix)
+    return matrix
+
+
+def MOVE_LEFT(matrix):
+    for j in range(4):
+        compare_left(matrix, 0, j)
+        compare_left(matrix, 1, j)
+        compare_left(matrix, 0, j)
+        compare_left(matrix, 2, j)
+        compare_left(matrix, 1, j)
+        compare_left(matrix, 0, j)
+
+    generate_random(matrix)
+    return matrix
+
+
+def MOVE_DOWN(matrix):
+    for j in range(4):
+        compare_down(matrix, 3, j)
+        compare_down(matrix, 2, j)
+        compare_down(matrix, 3, j)
+        compare_down(matrix, 1, j)
+        compare_down(matrix, 2, j)
+        compare_down(matrix, 3, j)
+    generate_random(matrix)
+    return matrix
+
+
+def MOVE_RIGHT(matrix):
+    for i in range(4):
+        compare_right(matrix, i, 3)
+        compare_right(matrix, i, 2)
+        compare_right(matrix, i, 3)
+        compare_right(matrix, i, 1)
+        compare_right(matrix, i, 2)
+        compare_right(matrix, i, 3)
+    generate_random(matrix)
+    return matrix
