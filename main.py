@@ -30,5 +30,5 @@ if __name__ == '__main__':
             main_data.input_error()
         for i in range(len(main_data.matrix)):
             for j in range(len(main_data.matrix[i])):
-                if main_data.matrix[i][j]==2048:
+                if main_data.matrix[i][j] == 2048:
                     main_data.game_over()
