@@ -57,7 +57,7 @@ def compare_right(matrix, one, col):
     elif matrix[one][col] == 0:
         matrix[one][col] = matrix[one][col - 1]
         matrix[one][col - 1] = 0
-    elif matrix[one][col - 1]==matrix[one][col]:
+    elif matrix[one][col - 1] == matrix[one][col]:
         matrix[one][col] = 2 * matrix[one][col - 1]
         matrix[one][col - 1] = 0
     else:
@@ -65,20 +65,68 @@ def compare_right(matrix, one, col):
 
 
 def generate_random(matrix):
+    k = 0;
     zero_matrix = []
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             if matrix[i][j] == 0:
                 zero_matrix.append([i, j])
-    random_list = random.sample(zero_matrix, RANDOM)
-    index = random.choice([1, 2])
-    a = random_list[0][0]
-    b = random_list[0][1]
-    # 第row行第col列装入数2的index次方，即2的一次或二次
-    matrix[a][b] = 2 ** index
+    if len(zero_matrix) == 0:
+        k = COMPARE_EQUAL(matrix)
+        if k <15:
+            print("Please change a direction")
+    else:
+        random_list = random.sample(zero_matrix, RANDOM)
+        index = random.choice([1, 2])
+        a = random_list[0][0]
+        b = random_list[0][1]
+        # 第row行第col列装入数2的index次方，即2的一次或二次
+        matrix[a][b] = 2 ** index
+
+
+def COMPARE_EQUAL(matrix):
+    k = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if i == 0 and j == 0:
+                if matrix[i][j] != 0 and matrix[i + 1][j] != 0 and matrix[i][j + 1] != 0 and matrix[i][j] != \
+                        matrix[i + 1][j] and matrix[i][j] != matrix[i][j + 1]:
+                    k += 1
+            if i == 0 and j == 3:
+                if matrix[i][j] != 0 and matrix[i + 1][j] != 0  and matrix[i][j] != \
+                        matrix[i + 1][j]:
+                    k += 1
+            if i == 3 and j == 0:
+                if matrix[i][j] != 0 and matrix[i][j + 1] != 0 and matrix[i][j] != matrix[i][
+                            j + 1]:
+                    k += 1
+            elif i == 0 and 0<j<3:
+                if matrix[i][j] != 0 and matrix[i + 1][j] != 0 and matrix[i][j + 1] != 0 and matrix[i][j] != \
+                        matrix[i + 1][j] and matrix[i][j] != matrix[i][j + 1]:
+                    k += 1
+            elif j == 0 and 0<i<3:
+                if matrix[i][j] != 0 and matrix[i + 1][j] != 0 and matrix[i][j + 1] != 0 and matrix[i][j] != \
+                        matrix[i + 1][j] and matrix[i][j] != matrix[i][j + 1]:
+                    k += 1
+            elif i == 3 and 0<j<3:
+                if matrix[i][j] != 0  and matrix[i][j + 1] != 0 and matrix[i][j] != \
+                        matrix[i][j+1] :
+                    k += 1
+            elif j == 3 and 0<i<3:
+                if matrix[i][j] != 0 and matrix[i + 1][j] != 0  and matrix[i][j] != \
+                        matrix[i + 1][j] :
+                    k += 1
+            elif  0<i<3 and  0<j<3:
+                if matrix[i][j] != 0 and matrix[i + 1][j] != 0 and matrix[i][j + 1] != 0 and matrix[i][j] != \
+                        matrix[i + 1][j] and matrix[i][j] != matrix[i][j + 1]:
+                    k += 1
+
+    return k
 
 
 #
+
+
 # def compare_down(matrix, one, line):
 #     if matrix[one + 1][col] == 0:
 #         pass

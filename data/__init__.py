@@ -4,7 +4,7 @@
 # @Author  : summer
 # @File    : __init__.py.py
 # 这个moveup就是ctr/directions.py 里面的moveup函数
-from controler.directions import MOVE_UP,MOVE_DOWN,MOVE_LEFT,MOVE_RIGHT
+from controler.directions import MOVE_UP,MOVE_DOWN,MOVE_LEFT,MOVE_RIGHT,COMPARE_EQUAL
 import random
 
 # 位置个数
@@ -38,8 +38,11 @@ def init_matrix():
 
 
 class TheData():
-    def __init__(self):
-        self.matrix = init_matrix()
+    def __init__(self,matrix =None):
+        if matrix == None:
+            self.matrix = init_matrix()
+        else:
+            self.matrix = matrix
 
     def __print_matrix__(self):
         # 这就是一个遍历  把这个看懂
@@ -115,6 +118,17 @@ class TheData():
     def input_error(self):
         print('WRONG INPUT!Please input again:')
         self.__print_matrix__()
+
+    # 这里没有参数，self是自带的，引用的时候不用带上
+    # 要是需要带别的参数的话要这么定义
+    # def compare_equal(self,another_argument):
+    #   pass
+    def compare_equal(self):
+        self.k=COMPARE_EQUAL(self.matrix)
+        if self.k==15:
+           print("game over")
+
+
 
 # if __name__ == '__main__':
 #     data = TheData()
